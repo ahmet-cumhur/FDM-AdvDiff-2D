@@ -1,5 +1,5 @@
 # 2D Advection Diffusion Solver 
-Small finite difference method (FDM) solver for 2D advection diffusion problems on a structured grid.
+Finite difference method (FDM) solver for 2D advection diffusion problems on a structured grid.
 
 ## Demo (GIF)
 ![Demo GIF](media/demo.gif)
