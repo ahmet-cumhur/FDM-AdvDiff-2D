@@ -6,7 +6,7 @@ from numba import set_num_threads, get_num_threads
 #set the number of threads here
 set_num_threads(8)
 #define the object here
-adv_solver = Adv_Diff_Solver(400,200,2.0,1.0,0.01,0.5,0.1,0.0)
+adv_solver = Adv_Diff_Solver(600,300,3.0,1.5,0.01,0.4,0.05,0.0)
 #initiate the variables here
 nx = adv_solver.nx
 ny = adv_solver.ny
@@ -24,7 +24,7 @@ phi_s = adv_solver.phi_s
 
 i = 0
 t_current = 0.0
-t_final = 2.0
+t_final = 5.0
 t0 = time.perf_counter()
 #apply the inital condition
 adv_solver.apply_ic(phi_n,phi_s,nx,ny)
