@@ -79,6 +79,8 @@ class Adv_Diff_Solver:
         x0,y0 = 0.0,0.0
         npts = nx*ny
         work_dir = os.getcwd()
+        if not work_dir:
+            os.makedirs(work_dir+"\\vtk_output")
         filename = work_dir+f"/vtk_output/data_{i:07d}.vtk"
         temp_filename = work_dir+f"/vtk_output/data_{i:07d}.tmp"
         x0c = x0+0.5*dx; y0c = y0+0.5*dy
