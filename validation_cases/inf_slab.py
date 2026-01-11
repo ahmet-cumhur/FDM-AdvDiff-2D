@@ -53,6 +53,7 @@ while t_current<t_final:
         concent_data_num = get_phi_num_slab(phi_n,nx,ny)
         concent_data_an  = solve_inf_slab_analytical(t_current,dx,nx,r,adv_solver.x,C,D)
         print("Num:",concent_data_num,concent_data_an)
+        
     
     if i%50 == 0:
         print(f"Time step size: {dt}\n")
