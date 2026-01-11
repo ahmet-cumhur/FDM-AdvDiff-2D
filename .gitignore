@@ -1,5 +1,5 @@
 __pycache__/
 vtk_output/
 *.vtk
-
 *.mp4
+__init__.py

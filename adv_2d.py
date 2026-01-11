@@ -15,17 +15,26 @@ class Adv_Diff_Solver:
         self.phi_s = np.zeros((ny+2,nx+2))
         self.dx = l/nx
         self.dy = h/ny
+        self.x = np.linspace(0,l,nx)
+        self.y = np.linspace(0,h,ny)
 
     def time_roll(self,phi_n,phi_s):
         phi_n[:, :] = phi_s[:, :]
         return phi_n
 
-    def apply_ic(self,phi_n,phi_s,nx,ny):
+    def apply_ic(self,phi_n,phi_s,nx,ny,r,validation_case,concentration):
+        concentration=float(concentration)
         mid_x = nx//2
         mid_y = ny//2
-        r = 2
-        phi_s[mid_y-r:mid_y,mid_x-r:mid_x] = 1.0
-        phi_n[mid_y-r:mid_y,mid_x-r:mid_x] = 1.0
+        if validation_case == "source":
+            phi_s[mid_y-r:mid_y,mid_x-r:mid_x+r] = concentration
+            phi_n[mid_y-r:mid_y,mid_x-r:mid_x+r] = concentration
+        elif validation_case == "slab":
+            phi_s[:,mid_x-r:mid_x+r] = concentration
+            phi_n[:,mid_x-r:mid_x+r] = concentration
+        elif validation_case == "empty":
+            phi_s[mid_y-r:mid_y+r,mid_x-r:mid_x+r] = concentration
+            phi_n[mid_y-r:mid_y+r,mid_x-r:mid_x+r] = concentration
         return phi_s,phi_n
     
     def calculate_time_step(self,dx,dy,u,v,nu):
@@ -99,7 +108,7 @@ class Adv_Diff_Solver:
         # ---- POINT DATA ----
         f.write(f"POINT_DATA {npts}\n")
         # Scalar omega (1 value per point)
-        f.write("SCALARS phi double 1\n")
+        f.write("SCALARS C double 1\n")
         f.write("LOOKUP_TABLE default\n")
         np.savetxt(f, phi_flat, fmt="%.6g")
 
