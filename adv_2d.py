@@ -30,8 +30,10 @@ class Adv_Diff_Solver:
             phi_s[mid_y-r:mid_y,mid_x-r:mid_x+r] = concentration
             phi_n[mid_y-r:mid_y,mid_x-r:mid_x+r] = concentration
         elif validation_case == "slab":
-            phi_s[:,mid_x-r:mid_x+r] = concentration
-            phi_n[:,mid_x-r:mid_x+r] = concentration
+            # +1 here comes for apply the ic in the middle otherwise
+            #we see a 0.5 dx shift in the ic
+            phi_s[:,mid_x-r+1:mid_x+r+1] = concentration
+            phi_n[:,mid_x-r+1:mid_x+r+1] = concentration
         elif validation_case == "empty":
             phi_s[mid_y-r:mid_y+r,mid_x-r:mid_x+r] = concentration
             phi_n[mid_y-r:mid_y+r,mid_x-r:mid_x+r] = concentration
@@ -81,8 +83,8 @@ class Adv_Diff_Solver:
         work_dir = os.getcwd()
         if not work_dir:
             os.makedirs(work_dir+"\\vtk_output")
-        filename = work_dir+f"/vtk_output/data_{i:07d}.vtk"
-        temp_filename = work_dir+f"/vtk_output/data_{i:07d}.tmp"
+        filename = work_dir+f"\\vtk_output\\data_{i:07d}.vtk"
+        temp_filename = work_dir+f"\\vtk_output\\data_{i:07d}.tmp"
         x0c = x0+0.5*dx; y0c = y0+0.5*dy
         
         # first we need to change the nx,ny to ny,nx and than,

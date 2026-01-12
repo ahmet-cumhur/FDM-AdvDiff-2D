@@ -2,7 +2,7 @@ import time
 from adv_2d import Adv_Diff_Solver
 from get_phi_parr import get_phi,apply_bc_n,apply_bc_s
 from numba import set_num_threads, get_num_threads
-from get_num_analytic_data import get_phi_num_slab,solve_inf_slab_analytical,comparision
+from get_num_analytic_data import get_phi_num_slab,solve_inf_slab_analytical,comparision_concentration,get_L2_error,err_vis
 
 #get the numeric results here 
 set_num_threads(8)
@@ -10,7 +10,7 @@ set_num_threads(8)
 #no velocities/advection only difision case
 #set diffusion here D= 1e-5
 D = 1e-2
-adv_solver = Adv_Diff_Solver(10,10,1.0,1.0,D,0.0,0.0,0.0)
+adv_solver = Adv_Diff_Solver(40,10,1.0,1.0,D,0.0,0.0,0.0)
 #initiate the variables here
 nx = adv_solver.nx
 ny = adv_solver.ny
@@ -25,6 +25,11 @@ phi_inlet = adv_solver.phi_inlet
 phi_n = adv_solver.phi_n
 phi_s = adv_solver.phi_s
 
+#these are for getting error
+ts = []
+l2_error = []
+l2_rel = []
+linf = []
 
 i = 0
 t_current = 0.0
@@ -32,7 +37,7 @@ t_final = 1.0
 t0 = time.perf_counter()
 #apply the inital condition
 #r here is the thickness of the slab
-r = 1
+r = 2
 C = 1.0
 adv_solver.apply_ic(phi_n,phi_s,nx,ny,r,"slab",C)
 #main time loop
@@ -40,7 +45,8 @@ while t_current<t_final:
     i+=1
     #constant dt will be applied other dt is too big
     #dt = adv_solver.calculate_time_step_2(dx,dy,u,v,nu)
-    dt = 1e-3
+    #dt = 1e-3
+    dt = 0.0005
     t_current += dt
     #solver
     apply_bc_n(phi_n,phi_inlet,nx,ny)
@@ -48,21 +54,24 @@ while t_current<t_final:
     apply_bc_s(phi_s,phi_inlet,nx,ny)
     adv_solver.time_roll(phi_n,phi_s)
     #write the data
-    if i%50 == 0:
+    if i%25 == 0:
         adv_solver.vtk_converter(nx,ny,phi_n,dx,dy,t_current,i)
         concent_data_num = get_phi_num_slab(phi_n,nx,ny)
         concent_data_an  = solve_inf_slab_analytical(t_current,dx,nx,r,adv_solver.x,C,D)
-        comparision(adv_solver.x,concent_data_num,concent_data_an,i)
-
-        print("Num: \n",concent_data_num)
-        print("An: \n",concent_data_an)
+        l2_d,l2_rel_d,linf_d = get_L2_error(concent_data_num,concent_data_an)
+        ts.append(t_current)
+        l2_error.append(100*l2_d)
+        l2_rel.append(100*l2_rel_d)
+        linf.append(100*linf_d)
+        comparision_concentration(adv_solver.x,concent_data_num,concent_data_an,i,C)
         
     
-    if i%50 == 0:
+    if i%25 == 0:
         print(f"Time step size: {dt}\n")
         print(f"Flow time: {t_current}\n")
         print("Numba threads:", get_num_threads())
 
+err_vis(ts,l2_error,l2_rel,linf)
 t1 = time.perf_counter()
 st = "Total simulation time: "+str(adv_solver.time_counter(t0,t1))
 print(st)
