@@ -15,7 +15,7 @@ in vectoral form
 In 2D with derivative form:
 
 $$
-\frac{\partial C}{\partial t} + u*\frac{\partial C}{\partial x} = \nu*\frac{\partial^2 C}{\partial x^2}
+\frac{\partial C}{\partial t} + u\,\frac{\partial C}{\partial x} = \nu*\frac{\partial^2 C}{\partial x^2}
 $$
 
 <div align= "center" > 
@@ -23,7 +23,7 @@ for x direction
 </div>
 
 $$
-\frac{\partial C}{\partial t} + v*\frac{\partial C}{\partial y} = \nu*\frac{\partial^2 C}{\partial y^2}
+\frac{\partial C}{\partial t} + v\,\frac{\partial C}{\partial y} = \nu*\frac{\partial^2 C}{\partial y^2}
 $$ 
 
 <div align= "center" > 
@@ -42,7 +42,7 @@ $$
 Spatial discretezation for x direction:
 
 $$
-u*\frac{\partial C}{\partial x} = \frac{C_{i,j}-C_{i-1,j}}{\Delta x}
+u\,\frac{\partial C}{\partial x} = u\,\frac{C_{i,j}-C_{i-1,j}}{\Delta x}
 $$
 
 <div align="center">
@@ -50,7 +50,7 @@ US convective term
 </div>
 
 $$
-\nu*\frac{\partial^2 C}{\partial x^2} = \frac{C_{i-1,j}-2*C_{i,j}+C_{i+1,j}}{\Delta x^2}
+\nu,\frac{\partial^2 C}{\partial x^2} = \nu,\frac{C_{i-1,j}-2*C_{i,j}+C_{i+1,j}}{\Delta x^2}
 $$
 
 <div align="center">
@@ -60,7 +60,7 @@ CDS diffison term
 Spatial discretezation for y direction:
 
 $$
-v*\frac{\partial C}{\partial y} = \frac{C_{i,j}-C_{i,j-1}}{\Delta y}
+v\,\frac{\partial C}{\partial y} = v\,\frac{C_{i,j}-C_{i,j-1}}{\Delta y}
 $$
 
 <div align="center">
@@ -68,7 +68,7 @@ US convective term
 </div>
 
 $$
-\nu*\frac{\partial^2 C}{\partial y^2} = \frac{C_{i,j-1}-2*C_{i,j}+C_{i,j+1}}{\Delta y^2}
+\nu,\frac{\partial^2 C}{\partial y^2} = \nu,\frac{C_{i,j-1}-2*C_{i,j}+C_{i,j+1}}{\Delta y^2}
 $$
 
 <div align="center">
