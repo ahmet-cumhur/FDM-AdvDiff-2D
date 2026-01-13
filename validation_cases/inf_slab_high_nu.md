@@ -41,9 +41,11 @@ $$
 <div align="center">
 US convective term 
 </div>
+
 $$
 \nu*\frac{\partial^2 C}{\partial x^2} = \frac{C_{i-1,j}-2*C_{i,j}+C_{i+1,j}}{\Delta x^2}
 $$
+
 <div align="center">
 CDS diffison term 
 </div>
