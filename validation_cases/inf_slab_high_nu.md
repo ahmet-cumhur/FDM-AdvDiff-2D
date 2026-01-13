@@ -83,7 +83,7 @@ C_{i,j}^{n+1} = C_{i,j}^{n}
 u\\frac{C_{i,j}^{n}-C_{i-1,j}^{n}}{\Delta x}
 +v\\frac{C_{i,j}^{n}-C_{i,j-1}^{n}}{\Delta y}
 \right)
-+\Delta t\,\nu\left(
++\Delta t\\nu\left(
 \frac{C_{i-1,j}^{n}-2C_{i,j}^{n}+C_{i+1,j}^{n}}{\Delta x^2}
 +\frac{C_{i,j-1}^{n}-2C_{i,j}^{n}+C_{i,j+1}^{n}}{\Delta y^2}
 \right)
