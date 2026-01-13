@@ -54,6 +54,16 @@ class Adv_Diff_Solver:
         dt_four_y = coef_four*(dy**2)/nu
         dt = max(eps,min(dt_cfl_x,dt_cfl_y,dt_four_x,dt_four_y))
         return dt
+    
+    def calculate_time_step_diffusion(self,dx,dy,nu):
+        eps = 1e-10
+        coef_four = 0.05
+        dt_four_x = coef_four*(dx**2)/nu
+        dt_four_y = coef_four*(dy**2)/nu
+        dt = max(eps,min(dt_four_x,dt_four_y))
+        print("time step size x: ", dt_four_x,"time step size y: ",dt_four_y)
+        return dt
+    
     def calculate_time_step_2(self,dx,dy,u,v,nu):
         eps = 1e-10
         coef_four = 0.2

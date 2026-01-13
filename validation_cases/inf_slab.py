@@ -3,14 +3,15 @@ from adv_2d import Adv_Diff_Solver
 from get_phi_parr import get_phi,apply_bc_n,apply_bc_s
 from numba import set_num_threads, get_num_threads
 from get_num_analytic_data import get_phi_num_slab,solve_inf_slab_analytical,comparision_concentration,get_L2_error,err_vis
+from get_phi_parr import get_phi_central
 
 #get the numeric results here 
 set_num_threads(8)
 #define the object here
 #no velocities/advection only difision case
-#set diffusion here D= 1e-5
-D = 1e-2
-adv_solver = Adv_Diff_Solver(40,10,1.0,1.0,D,0.0,0.0,0.0)
+#set diffusion here D= 1e-2
+D = 1e-5
+adv_solver = Adv_Diff_Solver(400,10,1.0,1.0,D,0.0,0.0,0.0)
 #initiate the variables here
 nx = adv_solver.nx
 ny = adv_solver.ny
@@ -37,24 +38,27 @@ t_final = 1.0
 t0 = time.perf_counter()
 #apply the inital condition
 #r here is the thickness of the slab
-r = 2
+#set r 5% of the nx
+r = 20
 C = 1.0
 adv_solver.apply_ic(phi_n,phi_s,nx,ny,r,"slab",C)
 #main time loop
 while t_current<t_final:
     i+=1
     #constant dt will be applied other dt is too big
-    #dt = adv_solver.calculate_time_step_2(dx,dy,u,v,nu)
+    dt = adv_solver.calculate_time_step_diffusion(dx,dy,nu)
     #dt = 1e-3
-    dt = 0.0005
+    #dt = 1e-4
     t_current += dt
     #solver
     apply_bc_n(phi_n,phi_inlet,nx,ny)
-    get_phi(ny,nx,u,v,phi_n,phi_s,dt,dx,dy,nu,phi_inlet)
+    #we apply the central or upwind scheme here
+    get_phi(ny,nx,u,v,phi_n,phi_s,dt,dx,dy,nu)
+    #get_phi_central(ny,nx,u,v,phi_n,phi_s,dt,dx,dy,nu)
     apply_bc_s(phi_s,phi_inlet,nx,ny)
     adv_solver.time_roll(phi_n,phi_s)
     #write the data
-    if i%25 == 0:
+    if i%1 == 0:
         adv_solver.vtk_converter(nx,ny,phi_n,dx,dy,t_current,i)
         concent_data_num = get_phi_num_slab(phi_n,nx,ny)
         concent_data_an  = solve_inf_slab_analytical(t_current,dx,nx,r,adv_solver.x,C,D)
@@ -66,7 +70,7 @@ while t_current<t_final:
         comparision_concentration(adv_solver.x,concent_data_num,concent_data_an,i,C)
         
     
-    if i%25 == 0:
+    if i%1 == 0:
         print(f"Time step size: {dt}\n")
         print(f"Flow time: {t_current}\n")
         print("Numba threads:", get_num_threads())

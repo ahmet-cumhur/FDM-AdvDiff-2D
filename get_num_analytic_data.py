@@ -36,14 +36,15 @@ def get_L2_error(concent_data_num,concent_data_an):
     return l2,l2_rel,linf
 
 def comparision_concentration(x,concent_data_num,concent_data_an,i,C):
+    #new scheme of central differences added
     save_location = "C:\\Users\\mehme\\OneDrive\\Desktop\\projects\\2d\\adv_pth\\validation_cases"
     if not save_location:
         os.mkdir("C:\\Users\\mehme\\OneDrive\\Desktop\\projects\\2d\\adv_pth\\validation_cases")
     
-    fig,(ax1,ax2,ax3) = plt.subplots(3,1,figsize=(12,10),sharex=True)
+    fig,(ax1,ax2,ax3) = plt.subplots(3,1,figsize=(14,12),sharex=True)
 
     ax1.plot(x,concent_data_num,"b")
-    ax1.set_title("Numerical Solution")
+    ax1.set_title("Numerical Upwind Solution")
     ax1.set_xlabel("Domain length[m]")
     ax1.set_ylabel("Concentration[-]")
     ax1.set_ylim(-0.05,C*1.05)
@@ -54,7 +55,7 @@ def comparision_concentration(x,concent_data_num,concent_data_an,i,C):
     ax2.set_ylabel("Concentration[-]")
     ax2.set_ylim(-0.05,C*1.05)
 
-    ax3.plot(x,concent_data_num,"b",label="Numerical Solution")
+    ax3.plot(x,concent_data_num,"b",label="Numerical Upwind Solution")
     ax3.plot(x,concent_data_an,"r",label="Analytical Solution")
     ax3.set_xlabel("Domain length[m]")
     ax3.set_ylabel("Concentration[-]")
