@@ -7,8 +7,13 @@ valiadtion of the solvers accuracy + stability at highly diffusion dominated cas
 $$
 \frac{\partial C}{\partial t} + \mathbf{u}\cdot\nabla C = \nu \nabla^2 C
 $$
-                in vectoral form. 
+
+<div align= "center" > 
+in vectoral form
+</div>
+
 In 2D with derivative form:
+
 $$
 \frac{\partial C}{\partial t} + u*\frac{\partial C}{\partial x} = \nu*\frac{\partial^2 C}{\partial x^2}
 $$
@@ -38,6 +43,7 @@ Spatial discretezation for x direction:
 $$
 u*\frac{\partial C}{\partial x} = \frac{C_{i,j}-C_{i-1,j}}{\Delta x}
 $$
+
 <div align="center">
 US convective term 
 </div>
@@ -71,7 +77,7 @@ CDS diffison term
 So total equation with time and spatial discretazation becomes:
 
 $$
-{C_{i,j}^{n+1}} = {C_{i,j}^{n}}-{\Delta t}*(\frac{C_{i,j}^{n}-C_{i-1,j}^{n}}{\Delta x} + \frac{C_{i,j}^{n}-C_{i,j-1}^{n}}{\Delta y})+{\Delta t}*(\frac{C_{i-1,j}^{n}-2*\C_{i,j}^{n}+C_{i+1,j}^{n}}{\Delta x^2} + \frac{C_{i,j-1}^{n}-2*C_{i,j}^{n}+C_{i,j+1}^{n}}{\Delta y^2})
+{C_{i,j}^{n+1}} = {C_{i,j}^{n}}-{\Delta t}*(\frac{C_{i,j}^{n}-C_{i-1,j}^{n}}{\Delta x} + \frac{C_{i,j}^{n}-C_{i,j-1}^{n}}{\Delta y})+{\Delta t}*(\frac{C_{i-1,j}^{n}-2*C_{i,j}^{n}+C_{i+1,j}^{n}}{\Delta x^2} + \frac{C_{i,j-1}^{n}-2*C_{i,j}^{n}+C_{i,j+1}^{n}}{\Delta y^2})
 $$
 
 TBC...
