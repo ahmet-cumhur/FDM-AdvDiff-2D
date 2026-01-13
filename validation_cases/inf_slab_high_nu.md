@@ -36,7 +36,7 @@ For time discretation we apply euler explicit scheme (EES) because of its conven
 Time discretezation:
 
 $$ 
-\frac{\partical C}{\partial t} = \frac{C^{n+1}-C^{n}}{\Delta t}
+\frac{\partial C}{\partial t} = \frac{C^{n+1}-C^{n}}{\Delta t}
 $$
 
 Spatial discretezation for x direction:
